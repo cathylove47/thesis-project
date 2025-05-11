@@ -1,3 +1,139 @@
 {
-    "markdown.validate.enabled": true
+  "latex-workshop.showContextMenu": true,
+  "latex-workshop.intellisense.package.enabled": true,
+  "latex-workshop.latex.autoBuild.run": "never",
+
+  // --- 设置输出目录 ---
+  "latex-workshop.latex.outDir": "%DIR%/out",
+
+  // --- 设置默认编译配方为 latexmk (xelatex) ---
+  "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
+
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (xelatex)",
+      "tools": [
+        "latexmk_xelatex"
+      ]
+    },
+    {
+      "name": "latexmk",
+      "tools": [
+        "latexmk"
+      ]
+    },
+    {
+      "name": "PDFlatex",
+      "tools": [
+        "pdflatex"
+      ]
+    },
+    {
+      "name": "pdflatex -> bibtex -> pdflatex*2",
+      "tools": [
+        "pdflatex",
+        "bibtex",
+        "pdflatex",
+        "pdflatex"
+      ]
+    },
+    {
+      "name": "xelatex",
+      "tools": [
+        "xelatex"
+      ]
+    },
+    {
+      "name": "xelatex -> bibtex -> xelatex*2",
+      "tools": [
+        "xelatex",
+        "bibtex",
+        "xelatex",
+        "xelatex"
+      ]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "latexmk_xelatex",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-xelatex",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-output-directory=%OUTDIR%", // 建议为直接调用的编译器也加上输出目录
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-output-directory=%OUTDIR%", // 建议为直接调用的编译器也加上输出目录
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "bibtex",
+      "command": "bibtex",
+      "args": [
+        // 如果 .aux 文件在 outDir 中 (当 xelatex/pdflatex 工具也使用 output-directory 时)
+        // BibTeX 需要在 outDir 中操作，或者参数指向 outDir 中的 .aux 文件
+        // 使用 latexmk 时，它通常会处理好这个问题。
+        // 如果 xelatex 工具的 args 中也配置了 -output-directory=%OUTDIR%，
+        // 那么 bibtex 的参数应该是 "%OUTDIR%/%DOCFILE_NOEXT%" (如果 %DOCFILE_NOEXT% 能正确替换)
+        // 或者让 latexmk 处理。目前保留 %DOC%，因为上面 xelatex/pdflatex 工具也输出了 -output-directory。
+        // BibTeX 会在 %OUTDIR% 中寻找由 %DOC% (完整路径) 对应的 .aux 文件。
+        "%OUTDIR%/%DOCFILE_NOEXT%" // bibtex 通常在输出目录操作 basename.aux
+      ],
+      "env": {}
+    }
+  ],
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux", "*.bbl", "*.blg", "*.idx", "*.ind", "*.lof", "*.lot", "*.out", "*.toc",
+    "*.acn", "*.acr", "*.alg", "*.glg", "*.glo", "*.gls", "*.ist", "*.fls", "*.log",
+    "*.fdb_latexmk", "*.nav", "*.snm", "*.synctex.gz", "*.bcf", "*.run.xml"
+  ],
+
+  // --- 将PDF预览设置回VS Code内置查看器 ---
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.view.pdf.ref.viewer": "tab", // "查看引用PDF" 也使用内置查看器
+  "latex-workshop.view.pdf.viewerZoom": "auto", // 内置查看器的默认缩放级别："auto", "page-width", "page-fit", "page-actual", 或数字如 1.2 (120%)
+
+  // --- 以下外部阅读器相关配置已被移除或注释掉 ---
+  // "latex-workshop.view.pdf.external.viewer.command": "...",
+  // "latex-workshop.view.pdf.external.viewer.args": [ ... ],
+  // "latex-workshop.view.pdf.external.synctex.command": "...",
+  // "latex-workshop.view.pdf.external.synctex.args": [ ... ]
 }
