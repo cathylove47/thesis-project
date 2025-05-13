@@ -7,7 +7,7 @@
     \includegraphics[width=.9\textwidth]{figure/第三章.png}
     \caption{拓扑表示构建流程图}
 \end{figure}
- 
+
 \subsection{状态空间重构}
 我们需要将观测到的时间序列数据重构系统动力学状态空间,并构建其拓扑表示的方法.在许多科学和工程领域,我们面对的是复杂的动态系统,但往往只能观测到系统的一个或少数几个变量随着时间而变化,这种观测导致我们难以理解分析系统完整行为,所以我们需要从有限的,可能带有噪声的观测数据中,推断出驱动系统演化的潜在高维信息.传统的线性时间序列分析方法虽然在某些情况下有效,但往往难以捕捉复杂系统所固有的非线性特征和相互作用.状态空间重构是一个非常的好的解决办法,其基本洗漱是将低维的时间序列数据,通过特定的嵌入技术,转化为一个高维空间中的几何对象,这个重构出的状态空间在理想情况下能保持原始系统动力学的主要拓扑和几何特性.在众多状态空间重构技术中,时间延迟嵌入(TDE)扮演着基石性的角色.
 \subsubsection{Takens 嵌入定理}
@@ -33,7 +33,7 @@ TAKENS定理的直观解释是:由于确定性动力系统中各个状态变量�
 时间延迟嵌入(Time Delay Embedding, TDE) 是一种将一维时间序列数据转化为高维点云的技术，基于 Takens 嵌入定理。TDE 的基本思想是通过引入时间延迟和嵌入维度，将时间序列中的每个观测值与其过去的观测值组合成一个高维向量，从而重构出系统的相空间。这种方法能够捕捉到系统的非线性动力学特征，如周期性、混沌行为等。
 TDE 的基本原理是将一维时间序列 \( s(t) \) 通过引入时间延迟 \( \tau \) 和嵌入维度 \( d \)，转化为高维向量：
 \begin{equation}
-\vec{x}(t) = \left[ s(t), s(t - \tau), s(t - 2\tau), \dots, s(t - (d - 1)\tau) \right]
+    \vec{x}(t) = \left[ s(t), s(t - \tau), s(t - 2\tau), \dots, s(t - (d - 1)\tau) \right]
 \end{equation}
 这些向量构成的集合形成了一个高维点云，即重构的相空间。Takens 定理指出，当嵌入维度 \( d \geq 2m + 1 \)（其中 \( m \) 为原始系统的维数）时，重构的相空间与原始系统的相空间拓扑等价。这种重构使得我们可以从单一观测变量中恢复系统的非线性动力学行为，例如吸引子结构或混沌特性。点云中的每个点代表系统在某时刻的状态，而点云的几何形状则反映了系统的长期演化规律。
 
@@ -58,52 +58,52 @@ TDE 的基本原理是将一维时间序列 \( s(t) \) 通过引入时间延迟 
     \caption{时间延迟嵌入嵌入维度($d$)选择方法对比（不含优点和缺点）}
     \label{tab:embedding_dimension_methods_no_pros_cons}
     \begin{tabular}{
-      >{\raggedright\arraybackslash}m{3cm} % 方法名称 (左对齐，自动换行)
-      >{\raggedright\arraybackslash}m{4.5cm} % 核心原理 (左对齐，自动换行)
-      >{\raggedright\arraybackslash}m{5cm}  % 原理阐释 (左对齐，自动换行)
-      >{\raggedright\arraybackslash}m{4cm}  % 常用判据 (左对齐，自动换行)
-    }
-    \toprule % 顶部线条
-    \textbf{方法名称} & \textbf{核心原理}  & \textbf{原理阐释}  & \textbf{常用判据/解释} \\
-    \midrule % 中间线条
-    
-    伪近邻法 (FNN) \cite{rhodes1997false}& 邻近点在维度增加时的相对距离变化  & 维度不足时，投影导致假邻居；维度足够时，假邻居会散开，真邻居保持靠近  & \%FNN随 $d$ 增加首次降至零或小阈值  \\
-    \addlinespace % 增加行间距
-    
-    Cao方法\cite{cao1997practical} & 近邻点对距离相对变化率的平均值 ($E1(m)$)  & 旨在改进FNN，减少对阈值的依赖；观察变化率何时稳定  & 绘制 $E1(m)$ 曲线，寻找其趋于平稳的 $d$ 值 。$E2(m)$ 用于区分确定性与随机性  \\
-    \addlinespace
-    
-    符号动力学/熵方法\cite{matilla2021selection} & 符号序列的熵  & 利用熵度量信息量或依赖性随参数的变化；将 $d$ ($p$), $τ$ 与最优时间窗口 $\tau_w$ 关联  & 寻找使熵最大化($\tau^*$)和最小化($\tau_w$)的延迟，通过 $\tau_w=(p-1)\tau^*$ 定 $p$  \\
-    \addlinespace
-    
-    Takens/Sauer 定理 (理论基础) & 保证嵌入的微分同胚性  & 足够高的维度能“展开”吸引子，保持拓扑结构  & 理论要求 $m > 2d$ (Takens) 或 $m > 2d_A$ (Sauer)，其中 $d$ 为系统维数，$d_A$ 为吸引子盒维数 \\
-    
-    \bottomrule % 底部线条
+        >{\raggedright\arraybackslash}m{3cm} % 方法名称 (左对齐，自动换行)
+        >{\raggedright\arraybackslash}m{4.5cm} % 核心原理 (左对齐，自动换行)
+        >{\raggedright\arraybackslash}m{5cm}  % 原理阐释 (左对齐，自动换行)
+        >{\raggedright\arraybackslash}m{4cm}  % 常用判据 (左对齐，自动换行)
+        }
+        \toprule % 顶部线条
+        \textbf{方法名称}                        & \textbf{核心原理}             & \textbf{原理阐释}                                           & \textbf{常用判据/解释}                                                       \\
+        \midrule % 中间线条
+
+        伪近邻法 (FNN) \cite{rhodes1997false}    & 邻近点在维度增加时的相对距离变化          & 维度不足时，投影导致假邻居；维度足够时，假邻居会散开，真邻居保持靠近                      & \%FNN随 $d$ 增加首次降至零或小阈值                                                 \\
+        \addlinespace % 增加行间距
+
+        Cao方法\cite{cao1997practical}         & 近邻点对距离相对变化率的平均值 ($E1(m)$) & 旨在改进FNN，减少对阈值的依赖；观察变化率何时稳定                              & 绘制 $E1(m)$ 曲线，寻找其趋于平稳的 $d$ 值 。$E2(m)$ 用于区分确定性与随机性                      \\
+        \addlinespace
+
+        符号动力学/熵方法\cite{matilla2021selection} & 符号序列的熵                    & 利用熵度量信息量或依赖性随参数的变化；将 $d$ ($p$), $τ$ 与最优时间窗口 $\tau_w$ 关联 & 寻找使熵最大化($\tau^*$)和最小化($\tau_w$)的延迟，通过 $\tau_w=(p-1)\tau^*$ 定 $p$       \\
+        \addlinespace
+
+        Takens/Sauer 定理 (理论基础)               & 保证嵌入的微分同胚性                & 足够高的维度能“展开”吸引子，保持拓扑结构                                   & 理论要求 $m > 2d$ (Takens) 或 $m > 2d_A$ (Sauer)，其中 $d$ 为系统维数，$d_A$ 为吸引子盒维数 \\
+
+        \bottomrule % 底部线条
     \end{tabular}
     \par % 确保表格后的文本在新行开始
     \vspace{0.5cm} % 在表格后增加一些垂直空间
     \textit{注意：实际应用中选择嵌入维度 $d$ 通常是一个启发式过程，可能需要结合数据特性和析目标进行权衡 。FNN 和 Cao 方法旨在估计最小且足够的 $d$ 。}
-    \end{table}
+\end{table}
 下面我来介绍一下cao方法在论文中的运用:
 曹亮月\cite{cao1997practical}提出的确定标量时间序列最小嵌入维数 $d_{min}$ 的方法，其核心思想是避免传统方法中主观参数的选择。该方法首先定义一个量 $a(i,d)$：
 \begin{equation}
-a(i,d) = \frac{||y_i(d+1) - y_{n(i,d)}(d+1)||}{||y_i(d) - y_{n(i,d)}(d)||}
+    a(i,d) = \frac{||y_i(d+1) - y_{n(i,d)}(d+1)||}{||y_i(d) - y_{n(i,d)}(d)||}
 \end{equation}
 其中 $y_i(d)$ 是 $d$ 维重构相空间中的点，$y_{n(i,d)}(d)$ 是其最近邻。然后计算 $a(i,d)$ 的均值 $E(d)$：
 \begin{equation}
-E(d) = \frac{1}{N-d\tau}\sum_{i=1}^{N-d\tau} a(i,d)
+    E(d) = \frac{1}{N-d\tau}\sum_{i=1}^{N-d\tau} a(i,d)
 \end{equation}
 并考察其变化率 $E1(d)$：
 \begin{equation}
-E1(d) = E(d+1)/E(d)
+    E1(d) = E(d+1)/E(d)
 \end{equation}
 当 $d$ 大于某个值 $d_0$ 后，$E1(d)$ 趋于饱和，此时 $d_0+1$ 即为最小嵌入维数。为区分确定性与随机信号，还引入了 $E^*(d)$：
 \begin{equation}
-E^*(d) = \frac{1}{N-d\tau}\sum_{i=1}^{N-d\tau} |x_{i+d\tau} - x_{n(i,d)+d\tau}|
+    E^*(d) = \frac{1}{N-d\tau}\sum_{i=1}^{N-d\tau} |x_{i+d\tau} - x_{n(i,d)+d\tau}|
 \end{equation}
 及其变化率 $E2(d)$：
 \begin{equation}
-E2(d) = E^*(d+1)/E^*(d)
+    E2(d) = E^*(d+1)/E^*(d)
 \end{equation}
 对于随机数据，$E2(d)$ 对所有 $d$ 均约等于1。下表总结了论文中部分实验结果：
 
@@ -111,27 +111,27 @@ E2(d) = E^*(d+1)/E^*(d)
     \centering
     \caption{曹氏方法实验结果选例}
     \begin{tabular}{|l|l|l|l|}
-    \hline
-    \textbf{系统} & \textbf{数据长度} & \textbf{Cao方法 $d_{min}$} & \textbf{备注/FNN对比} \\
-    \hline
-    Hénon 吸引子 & 1000 \& 10000 & 2 & 结果对数据长度不敏感 \\
-    \hline
-    Ikeda 吸引子 & 1000 \& 10000 & 4 & 1000点时FNN结果不稳定 \\
-    \hline
-    Lorenz 吸引子 & 1000 \& 10000 & 3 & 结果稳定 \\
-    \hline
-    随机有色噪声 & 1000 \& 10000 & N/A ($E2 \approx 1$) & FNN方法会误判为低维混沌 \\
-    \hline
-    Mackey-Glass ($\Delta=100$) & 1000 \& 10000 & 17 & FNN方法结果偏小 ($\sim$6)且依赖参数 \\
-    \hline
-    特定四维映射 & 1000 \& 10000 & 4 & 1000点时FNN无法区分，万点结果也不稳 \\
-    \hline
-    实验激光数据 & 1000 & 7 & FNN结果在$d=7$后不稳定 \\
-    \hline
+        \hline
+        \textbf{系统}                 & \textbf{数据长度} & \textbf{Cao方法 $d_{min}$} & \textbf{备注/FNN对比}        \\
+        \hline
+        Hénon 吸引子                   & 1000 \& 10000 & 2                        & 结果对数据长度不敏感               \\
+        \hline
+        Ikeda 吸引子                   & 1000 \& 10000 & 4                        & 1000点时FNN结果不稳定           \\
+        \hline
+        Lorenz 吸引子                  & 1000 \& 10000 & 3                        & 结果稳定                     \\
+        \hline
+        随机有色噪声                      & 1000 \& 10000 & N/A ($E2 \approx 1$)     & FNN方法会误判为低维混沌            \\
+        \hline
+        Mackey-Glass ($\Delta=100$) & 1000 \& 10000 & 17                       & FNN方法结果偏小 ($\sim$6)且依赖参数 \\
+        \hline
+        特定四维映射                      & 1000 \& 10000 & 4                        & 1000点时FNN无法区分，万点结果也不稳    \\
+        \hline
+        实验激光数据                      & 1000          & 7                        & FNN结果在$d=7$后不稳定          \\
+        \hline
     \end{tabular}
-    \end{table}
+\end{table}
 
-    曹亮月通过对Hénon映射、Ikeda映射、Lorenz吸引子、随机有色噪声、高维Mackey-Glass方程、特定四维映射及真实激光数据等多种时间序列的实验验证了其方法的有效性。实验结果表明，该方法不仅能准确确定不同动力系统的最小嵌入维数 $d_{min}$，且对数据长度不敏感；尤为重要的是，它能有效区分确定性混沌与随机信号（如随机有色噪声，此时$E2(d) \approx 1$），并在处理高维系统（如Mackey-Glass）时显著优于传统的虚假最近邻(FNN)方法，后者在这些情况下常给出偏低或不稳定的结果且依赖于参数选择 。这些实验共同证明了曹氏方法在确定嵌入维数方面的鲁棒性、客观性和广泛适用性。
+曹亮月通过对Hénon映射、Ikeda映射、Lorenz吸引子、随机有色噪声、高维Mackey-Glass方程、特定四维映射及真实激光数据等多种时间序列的实验验证了其方法的有效性。实验结果表明，该方法不仅能准确确定不同动力系统的最小嵌入维数 $d_{min}$，且对数据长度不敏感；尤为重要的是，它能有效区分确定性混沌与随机信号（如随机有色噪声，此时$E2(d) \approx 1$），并在处理高维系统（如Mackey-Glass）时显著优于传统的虚假最近邻(FNN)方法，后者在这些情况下常给出偏低或不稳定的结果且依赖于参数选择 。这些实验共同证明了曹氏方法在确定嵌入维数方面的鲁棒性、客观性和广泛适用性。
 
 \subsubsection{时间延迟参数$\tau$的选择}
 
@@ -150,34 +150,34 @@ E2(d) = E^*(d+1)/E^*(d)
     \caption{时间延迟嵌入时间延迟 ($\tau$) 选择方法对比} % 表格标题
     \label{tab:time_delay_tau_methods_compare} % 用于交叉引用的标签
     \begin{tabular}{
-      >{\raggedright\arraybackslash}m{3cm}    % 方法名称 (左对齐，自动换行，宽度 3cm)
-      >{\raggedright\arraybackslash}m{4.5cm}  % 核心原理 (左对齐，自动换行，宽度 4.5cm)
-      >{\raggedright\arraybackslash}m{5cm}   % 原理阐释 (左对齐，自动换行，宽度 5cm)
-      >{\raggedright\arraybackslash}m{4cm}    % 常用判据 (左对齐，自动换行，宽度 4cm)
-      % 注意：总宽度 3+4.5+5+4 = 16.5cm，加上列间距可能超出典型 A4 页边距下的文本宽度
-      % 如遇表格超出页面，请尝试减小 m{} 列的宽度值
-    }
-    \toprule % 顶部线条 (来自 booktabs)
-    \textbf{方法名称} & \textbf{核心原理} (分析的度量) & \textbf{原理阐释} (为何有效) & \textbf{常用判据/解释} \\
-    \midrule % 中间线条 (来自 booktabs)
-    
-    自相关函数 (ACF)\cite{kantz2003nonlinear} & 时间序列与其滞后版本间的线性相关性  & 寻找 $x(t)$ 与 $x(t+\tau)$ 线性无关的最小延迟  & $\tau$ 取 ACF 首次降至零  或首次降至 $1/e \approx 0.37$  的值 \\
-    \addlinespace % 增加行间距 (来自 booktabs)
-    
-    平均互信息 (AMI)\cite{wallot2018calculation} & $x(t)$ 与 $x(t+\tau)$ 之间的统计依赖性 (信息论度量)  & 寻找 $x(t)$ 与 $x(t+\tau)$ 共享信息量最少的延迟，以捕捉非线性结构  & $\tau$ 取 AMI 函数 $I(\tau)$ 的第一个局部最小值  \\
-    \addlinespace
-    
-    C-C 方法 (基于关联积分)\cite{cai2008determination} & 分析关联积分在不同 $\tau, m$ 下随邻域半径 $r$ 的变化 [...] & 通过检验不同时间窗内数据的统计独立性与几何展开程度寻找最优参数  & 寻找特定统计量（如 $\Delta \bar{S}_2(t)$ 或 $\sigma_{cor}(t)$）首次穿零或达极小值对应的 $t$ (即 $\tau$)  \\
-    \addlinespace
-    
-    几何/直观方法 & 观察时间序列图或相图的特征时间尺度  & 基于对系统动力学行为的先验知识或直观观察估计 & $\tau$ 常取为主要周期或特征时间的某个分数（如 1/4 到 1/10）\\
-    
-    \bottomrule % 底部线条 (来自 booktabs)
+        >{\raggedright\arraybackslash}m{3cm}    % 方法名称 (左对齐，自动换行，宽度 3cm)
+        >{\raggedright\arraybackslash}m{4.5cm}  % 核心原理 (左对齐，自动换行，宽度 4.5cm)
+        >{\raggedright\arraybackslash}m{5cm}   % 原理阐释 (左对齐，自动换行，宽度 5cm)
+        >{\raggedright\arraybackslash}m{4cm}    % 常用判据 (左对齐，自动换行，宽度 4cm)
+        % 注意：总宽度 3+4.5+5+4 = 16.5cm，加上列间距可能超出典型 A4 页边距下的文本宽度
+        % 如遇表格超出页面，请尝试减小 m{} 列的宽度值
+        }
+        \toprule % 顶部线条 (来自 booktabs)
+        \textbf{方法名称}                              & \textbf{核心原理} (分析的度量)                    & \textbf{原理阐释} (为何有效)                        & \textbf{常用判据/解释}                                                                \\
+        \midrule % 中间线条 (来自 booktabs)
+
+        自相关函数 (ACF)\cite{kantz2003nonlinear}       & 时间序列与其滞后版本间的线性相关性                        & 寻找 $x(t)$ 与 $x(t+\tau)$ 线性无关的最小延迟           & $\tau$ 取 ACF 首次降至零  或首次降至 $1/e \approx 0.37$  的值                                \\
+        \addlinespace % 增加行间距 (来自 booktabs)
+
+        平均互信息 (AMI)\cite{wallot2018calculation}    & $x(t)$ 与 $x(t+\tau)$ 之间的统计依赖性 (信息论度量)    & 寻找 $x(t)$ 与 $x(t+\tau)$ 共享信息量最少的延迟，以捕捉非线性结构 & $\tau$ 取 AMI 函数 $I(\tau)$ 的第一个局部最小值                                             \\
+        \addlinespace
+
+        C-C 方法 (基于关联积分)\cite{cai2008determination} & 分析关联积分在不同 $\tau, m$ 下随邻域半径 $r$ 的变化 [...] & 通过检验不同时间窗内数据的统计独立性与几何展开程度寻找最优参数             & 寻找特定统计量（如 $\Delta \bar{S}_2(t)$ 或 $\sigma_{cor}(t)$）首次穿零或达极小值对应的 $t$ (即 $\tau$) \\
+        \addlinespace
+
+        几何/直观方法                                    & 观察时间序列图或相图的特征时间尺度                        & 基于对系统动力学行为的先验知识或直观观察估计                      & $\tau$ 常取为主要周期或特征时间的某个分数（如 1/4 到 1/10）                                          \\
+
+        \bottomrule % 底部线条 (来自 booktabs)
     \end{tabular}
     \par % 确保表格后的文本在新行开始
     \vspace{0.5cm} % 在表格后增加一些垂直空间
     \textit{注意：选择 $\tau$ 与选择 $d$ 密切相关。实际应用中 $\tau$ 的选择常带有启发性，需测试不同值的影响 [...]。AMI 通常被认为是较优选择 [...]。[...]处请替换为实际引用。}
-    \end{table}
+\end{table}
 
 \textbf{相关实验}: Wallot 和 Mønster（2018）\cite{wallot2018calculation} 该实验选择时间嵌入参数时，首先使用平均互信息（AMI）确定延迟参数 $\tau$。对于一维时间序列 $x(t)$，AMI 的计算公式为
 $$I(x(t),x(t+\tau))=\sum_{i,j}p_{ij}(\tau)\log\left(\frac{p_{ij}(\tau)}{p_{i}p_{j}}\right)$$
@@ -188,7 +188,7 @@ $$R_{(D_{emb}+1),d}^{2}(t,r)=R_{D_{emb},d}^{2}(t,r)+\sum_{j=1}^{d}[x_{j}(t+D_{em
 如果从 $D_{emb} \times d$ 维到 $(D_{emb}+1) \times d$ 维时，邻居间的距离发生显著变化（依据阈值 $R_{tol}$ 和 $A_{tol}$ 判断），则该邻居为虚假最近邻。选择使FNN百分比降至接近零的最小 $D_{emb}$ 值，最终的嵌入相空间维度为 $d \times D_{emb}$。
 
 % 加粗总结
-\textbf{总结}: 
+\textbf{总结}:
 嵌入维度 $d$ 的选择旨在确保重构空间具有足够的维度，以完全“展开”动力系统的吸引子，避免因维度不足导致的轨迹交叉和结构误判（即伪近邻现象）。我们探讨了多种估计最小充分嵌入维度的方法，包括基于几何直观的伪近邻法 (FNN) 及其改进（如 Cao 方法），以及基于系统理论的 Takens/Sauer 定理等。FNN 及其变种通过考察邻近点在维度增加时的相对距离变化来寻找合适的 $d$，而理论定理则提供了嵌入有效性的数学保证，但其给出的往往是维度的上限而非最优实用值。
 
 时间延迟 $\tau$ 的选择则关注于如何设置嵌入向量中各分量之间的时间间隔，以在保证分量间足够统计独立性（从而有效利用 $d$ 维空间）与保留系统时间演化内在关联性之间取得平衡。$\tau$ 过小导致信息冗余，$\tau$ 过大则可能丢失动力学信息。常用的 $\tau$ 选择方法包括分析时间序列自相关性（如自相关函数 ACF 法，主要关注线性相关）和信息论依赖性（如平均互信息 AMI 法，能更好地处理非线性相关），以及一些试图结合几何特性或同时考虑 $d$ 和 $\tau$ 的方法（如 C-C 方法）。其中，AMI 方法因其对非线性动力学的适应性而被广泛推荐。
@@ -222,22 +222,22 @@ $$R_{(D_{emb}+1),d}^{2}(t,r)=R_{D_{emb},d}^{2}(t,r)+\sum_{j=1}^{d}[x_{j}(t+D_{em
 
 延迟微分方程 (DDEs) \cite{lainscsek2015delay}是时间序列分析中的一种有力工具，它通过函数嵌入巧妙地结合了导数嵌入与非均匀延迟嵌入的思想。一个基础的线性DDE可以表示为：
 \begin{equation}
-\dot{x}(t) = a x(t-\tau)
+    \dot{x}(t) = a x(t-\tau)
 \end{equation}
 其中 $\dot{x}(t)$ 代表信号 $x(t)$ 的时间导数，$x(t-\tau)$ 是信号在过去某一时刻 $t-\tau$ 的值，而 $a$ 和 $\tau$ 分别是系数和时间延迟。这类方程能够揭示信号的频率特性，例如对于谐波信号 $x(t) = A\cos(\omega t + \phi)$，其延迟 $\tau$ 与频率 $\omega$ 存在特定关系，如 $\tau = \frac{(2n-1)\pi}{2\omega}$，且系数 $a = (-1)^n\omega$。DDEs的分析不止于线性范畴，例如非线性DDE，如下式所示：
 \begin{equation}
-\dot{x}(t) = a x(t-\tau)^2
+    \dot{x}(t) = a x(t-\tau)^2
 \end{equation}
 则可以用于检测信号中的非线性相互作用，例如二次相位耦合。更一般地，DDEs可以包含线性和非线性项的组合，例如：
 \begin{equation}
-\dot{x}(t) = a_1 x(t-\tau) + a_2 x(t-\tau)^2
+    \dot{x}(t) = a_1 x(t-\tau) + a_2 x(t-\tau)^2
 \end{equation}
 其中非线性项的系数（如 $a_2$）的存在与否能够指示特定非线性现象（如二次频率耦合）的出现。通过构建和分析这些基于时间序列数据选取的DDE模型，可以有效地揭示和分类复杂系统的动态行为。
 
 
 
 导数嵌入及其相关概念已在多个领域得到应用。在流式数据分析方面，DDE-MGM方案已被成功用于时间序列的在线建模与分类，据报道在保持高效率的同时取得了先进的性能。生物医学信号处理是另一个重要的应用领域，例如DDA已被用于区分心电图（EKG）数据反映的不同心脏状况，以及区分帕金森病患者与健康对照组的脑电图（EEG）数据。更一般地，导数嵌入可服务于时间序列的信号检测与分类任务。如前所述，DDA等方法还可用于时域内的谱分析，包括频率分析、耦合检测和双谱估计。在金融领域，虽然不直接称为导数嵌入，但相关的随机微分方程（SDEs）是建模资产价格等随机过程的核心工具，对于金融衍生品定价至关重要，其理论基础与导数概念紧密相连。此外，在变化检测领域，许多时间序列变化检测算法是遥感（如利用Landsat时间序列监测地表覆盖变化）和生物监测等应用中的关键组成部分，这些算法有时也隐式或显式地利用了序列的变化率信息。
- 
+
 \subsubsection{主成分分析嵌入}
 主成分分析（Principal Component Analysis, PCA）\cite{broomhead1986extracting}是一种经典的线性降维技术，其核心思想是通过正交线性变换将原始高维数据投影到一个新的低维坐标系中，旨在降维的同时尽可能多地保留由方差衡量的原始数据信息。这个新坐标系的轴被称为主成分（Principal Components, PCs），它们相互正交且按照其捕捉到的原始数据方差大小进行排序：第一主成分（PC1）对应数据方差最大的方向，第二主成分（PC2）是在与PC1正交的子空间中方差次大的方向，以此类推。本质上，PCA是在寻找数据变异性最大的方向。
 
@@ -268,47 +268,92 @@ PCA的计算过程通常涉及几个关键步骤。首先，对原始数据的�
 
 尽管存在实施上的挑战，非均匀嵌入技术凭借其灵活性已在多个需要精细刻画时间依赖性的领域得到应用。在时间序列预测方面，NUE有助于改进模型性能，尤其是在处理具有多时间尺度特性或需要精确选择历史依赖信息的情况。在复杂系统分析中，它是检测多元时间序列中变量间直接和间接耦合关系及因果方向性的重要工具。生物医学信号分析也是其关键应用场景，例如用于分析脑电图（EEG）或皮层脑电图（ECoG）等复杂生理信号，以研究癫痫发作机制或探测其他神经动力学特征。此外，NUE也被应用于网络传播分析，如构建航空延误传播网络以识别关键影响节点。更一般地，非均匀嵌入作为一种更灵活的状态空间重构工具，为各种非线性时间序列的建模与分析提供了有力的支持。
 
-\subsection{时间序列拓扑表示增强技术}
-\subsubsection{对时间序列进行倾斜处理}
+
+\subsection{基于持续同调对时间序列进行倾斜处理}
 在传统时间延迟嵌入及其直接变体之外，研究者亦致力于开发能够更全面捕捉时间序列特性，特别是高维拓扑信息与内在时序顺序信息的专门化方法。一个值得注意的进展来自严银凯等人（2024）\cite{JSJC202406009}提出的基于持续同调的倾斜时间序列分类（Persistent Homology Time Skew Incline, PHTSI）算法。该算法的核心创新在于其引入的“时间倾斜”（Time Skew）技术，旨在克服现有方法在提取时序顺序信息方面的不足，并增强对不同结构时间序列数据的适应性。
+PHTSI算法的整体架构包含数据预处理、核心特征提取与分类三个主要阶段。其设计旨在从原始时间序列数据中发掘深层次的拓扑结构信息，并将其有效地应用于分类任务。接下来我们详细介绍这种算法。
 
-PHTSI算法首先采用一种特定的二维点云构造方式，例如将单变量时间序列 $\{a_t\}$ 及其一阶差分组合成二维点 $(a_t, a_{t+1}-a_t)$（如本章3.3.1节所述），以此作为基础的点云表示，初步捕捉序列的即时状态与变化趋势。随后，该算法在通过滑动窗口划分得到的各个子区间上，对这些基础点云应用其核心的“时间倾斜”操作。具体而言，“时间倾斜”通过将子区间内的点云坐标与随时间（即点在子区间内的相对位置）线性变化的函数（例如 $f_1(l)=l$ 和 $f_2(l)=N+1-l$，其中 $N$ 为子区间内点的数量）相乘，从而为每个原始子区间生成多个结构上有所差异的“倾斜区间”点云。作者指出，这种变换的目的是通过改变点云的几何构型，一方面使得算法能够适应更多类型的时间序列数据结构，另一方面则更关键地在于能够有效地将时序的顺序信息融入到点云的拓扑结构中。
 
-在通过这种方式获得了原始子区间点云及其多个“倾斜”版本后，PHTSI算法接着对所有这些点云分别应用持续同调分析。它通过构建Vietoris-Rips (VR)复形流，并计算持久性图像（Persistence Image, PI），进而提取所谓的“持久性中心”（Persistence Centers）作为量化的拓扑特征向量。最后，这些从多样化点云视角（原始视角和时间倾斜后的多个视角）获得的拓扑特征被输入到随机森林分类器中进行时间序列分类。
-
-严银凯等人的工作通过PHTSI算法，特别是其创新的“时间倾斜”技术，为如何在拓扑数据分析框架内更有效地整合和利用时间序列的顺序信息提供了一个具体的解决方案。其研究结果表明，这种策略能够在多个基准数据集上提升分类的准确性和鲁棒性，为基于TDA的时间序列分析与分类提供了有益的思路和方法论上的补充。
-% 插入图片
 \begin{figure}[thbp!]
     \centering
     \includegraphics[width=1.0\textwidth]{figure/严银凯示意图.png}
     \caption{严银凯PHTSI算法示意图。}
 \end{figure}
 
-\subsubsection{特征化时间序列}
+
+\paragraph*{步骤一：数据预处理}
+在进行特征提取之前，原始时间序列数据需经过一系列预处理步骤，以确保数据的规范性并构建适用于拓扑分析的表示形式。首先需要做的是进行数据规范化，因为时间序列的数据通常的量纲不一致，通常会影响后续的分析过程，因此需要将数据尺度统一到特定区间。例如采用最小-最大规范化方法，将数据缩放到 $[0, 1]$ 的范围内。消除不同序列之间因为量纲差异可能导致的计算偏差问题。
+
+随后需要将一维时间序列转化为二维的点云结构，在本章的开头就介绍了点云构造方法，对于原始时间序列中的每一个数据点 $a_t^i$，通过结合其后续点的差分信息，构造一个二维向量 $q_t^i = (a_t^i, a_{t+1}^i - a_t^i)$。这样的转换不仅保留了原始数据点的值，还融入了其局部变化趋势，初步揭示了序列的动态特性。
+% 插入图片
+\begin{figure}[thbp!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figure/数据预处理流程图.png}
+    \caption{数据预处理流程图}
+\end{figure}
+
+\paragraph*{步骤二：核心特征提取}
+在构造完成点云之后，我们需要采用滑动窗口子序列划分方法，具体的做法是选择固定尺寸的滑动窗口及预设的滑动步长，将前一步构建的二维点云序列分割成若干个等长的子序列片段。这种局部化的处理方式有助于捕捉时间序列在不同阶段的局部模式，同时也能有效控制后续持久同调计算的复杂度。设窗口大小为 $w$ ，滑动步长为 $d$ ，则第 $i$ 个原始序列的第 $j$ 个子序列 $W_i^{j, 1}$ 可以表示为：
+\begin{equation}
+    W_i^{j, 1}=\left(q_{d \cdot j-d+1}^i, q_{d \cdot j-d+2}^i, \ldots, q_{d \cdot j-d+w}^i\right)
+\end{equation}
+
+接下来就是非常重要的时间序列倾斜方法，其目的是对子序列进行结构增强，用来揭示更丰富的时序依赖信息。“时间倾斜”是本研究中创新采用的一种策略，旨在通过对时间序列子区间内的点云施加与时间位置相关的加权，从而生成具有不同结构特性的新序列。
+假设我们有一个从原始时间序列中提取的子区间（或称为滑动窗口内的点云），记为 $S$ 。该子区间由 $W$ 个按时间顺序排列的点组成：
+
+\begin{equation}
+    S=\left(p_1, p_2, \ldots, p_W\right)
+\end{equation}
+
+
+其中，$p_l$ 代表子区间内第 $l$ 个时间点对应的数据点（可能是一个向量，例如 $p_l=x\left(t_l\right)$ ）。
+时间倾斜方法通过将此子区间 $S$ 与两个不同的时间依赖函数 $f_1$ 和 $f_2$ 进行逐点乘法（或加权）来实现。
+
+第一个倾斜变换采用线性函数 $f_1(k)=k$（其中 $k$ 为点在子序列中的序号，从1到 $w$ ），作用于子序列中的每个点 $q_k^{\prime}$（代表 $W_i^{j, 1}$ 中的第 $k$ 个点）：
+
+$$
+    W_i^{j, 2}=\left(1 \cdot q_1^{\prime}, 2 \cdot q_2^{\prime}, \ldots, w \cdot q_w^{\prime}\right)
+$$
+
+
+此变换增强了子序列中后续点的影响。
+第二个倾斜变换采用线性函数 $f_2(k)=w-k+1$ ，作用于子序列中的每个点 $q_k^{\prime}$ ：
+
+$$
+    W_i^{j, 3}=\left(w \cdot q_1^{\prime},(w-1) \cdot q_2^{\prime}, \ldots, 1 \cdot q_w^{\prime}\right)
+$$
+
+
+此变换则增强了子序列中初始点的影响。
+通过这种方式，原始子序列 $W_i^{j, 1}$ 及其两个倾斜版本 $W_i^{j, 2}$ 和 $W_i^{j, 3}$ 共同构成了后续拓扑分析的基础，使得算法能够从多个角度审视数据的内在结构。
+到这里为止都是为了第四章的持续同调计算和持久性图生成做准备，后续具体内容会在第四章详细讲解。
+
+
+\subsection{基于图的特征化时间序列}
 在标准的时间序列拓扑表示构建方法之外，为了更灵活地融入领域特定知识并优化持久同调的分析效果，Heo 与 Jung \cite{2} 近期提出了一种新颖的框架。该方法的核心在于引入了“特征化时间序列 (featured time series)”与“影响向量 (influence vector)”的概念，旨在通过调整时间序列的图表示来定制化持久同调的计算过程。
 
 首先，一个特征化时间序列 $(\hat{T}, g)$ 由两部分构成：其一是特征增强的时间序列 $\hat{T}$，它将原始时间序列 $T$ 与一个特征组件 $T_f$ 配对，即 $\hat{T}(t) = (T(t), T_f(t))$。这里的特征组件 $T_f(t)$ 可以包含与单个时间点 $T(t)$ 相关的0阶特征（例如，某时刻的湿度状况）以及与相邻时间点对 $\{T(t_k), T(t_{k+1})\}$ 相关的1阶特征（例如，温度变化的幅度）。这些特征通常来源于特定领域的知识。其二是影响向量 $g$，它是一个非负实值函数，为每一个定义的特征（以及无特征状态）赋予一个“影响值”，用以量化该特征在后续分析中的重要性 。
 
 该方法接着利用特征化时间序列 $(\hat{T}, g)$ 来构建一个加权图 $G=(V,E,\hat{W}_V,\hat{W}_E)$。其中，顶点集 $V$ 由时间序列中的观测值构成，边集 $E$ 通常连接连续的观测值。关键在于顶点权重函数 $\hat{W}_V$ 和边权重函数 $\hat{W}_E$ 的计算。它们并非简单地基于原始序列的频率，而是通过结合特征的出现次数和影响向量 $g$ 来确定。具体地，设 $F^0 = \{r_1, ..., r_m\}$ 为0阶特征集，$F^1 = \{s_1, ..., s_l\}$ 为1阶特征集。定义0阶计数矩阵 $C_0=(c_{ij}^0)$，其中 $c_{ij}^0$ 表示顶点 $v_i$ 与特征 $r_j$ (或无0阶特征状态 $\emptyset^0$) 在 $\hat{T}$ 中共同出现的次数。类似地，定义1阶计数矩阵 $C_1=(c_{ij}^1)$，其中 $c_{ij}^1$ 表示边 $e_i$ 与特征 $s_j$ (或无1阶特征状态 $\emptyset^1$) 在 $\hat{T}$ 中共同出现的次数。若影响向量 $g$ 对应0阶和1阶特征的分量分别为 $\vec{g_0} = (g(\emptyset^0), g(r_1), ..., g(r_m))$ 和 $\vec{g_1} = (g(\emptyset^1), g(s_1), ..., g(s_l))$，则顶点 $v_i$ 的权重和边 $e_i$ 的权重（也称为加权频率 $\hat{f}_{e_i}$）可以计算为：
 \begin{equation}
-\label{eq:featured_vertex_weight_revised}
-\hat{W}_V(v_i) = (C_0 \cdot \vec{g_0})_i
+    \label{eq:featured_vertex_weight_revised}
+    \hat{W}_V(v_i) = (C_0 \cdot \vec{g_0})_i
 \end{equation}
 \begin{equation}
-\label{eq:featured_edge_weight_revised}
-\hat{W}_E(e_i) = \hat{f}_{e_i} = (C_1 \cdot (\vec{g_1} + \vec{1}))_i
+    \label{eq:featured_edge_weight_revised}
+    \hat{W}_E(e_i) = \hat{f}_{e_i} = (C_1 \cdot (\vec{g_1} + \vec{1}))_i
 \end{equation}
 其中 $\vec{1}$ 是全1向量，用于确保在 $\vec{g_1}=\vec{0}$ 时边权重与传统频率定义一致 。
 
 随后，基于这个加权的图 $\hat{G}^g$，定义了节点间的距离度量 $\hat{d}$。对于图中的一条边 $e=\{a,b\}$，其长度 $L^g(e)$ 不仅考虑了其加权频率的倒数 $(\hat{W}_E(e))^{-1}$，还通过一个激活函数 $\rho$ (如 $\rho(z)=1-e^{-z^2}$ 对于 $z \ge 0$) 引入了与该边连接的两个顶点 $a,b$ 的加权频率 $\hat{W}_V(a)$ 和 $\hat{W}_V(b)$ 的影响：
 \begin{equation}
-\label{eq:featured_edge_length_revised}
-L^g(e) = (\hat{W}_E(e))^{-1} - \alpha (\rho(\hat{W}_V(a) + \hat{W}_V(b)))
+    \label{eq:featured_edge_length_revised}
+    L^g(e) = (\hat{W}_E(e))^{-1} - \alpha (\rho(\hat{W}_V(a) + \hat{W}_V(b)))
 \end{equation}
 其中 $\alpha = \min_{e' \in E} (\hat{W}_E(e'))^{-1}$ 是一个归一化因子，确保边长非负。两个顶点 $v,w$ 之间的距离 $\hat{d}(v,w)$ 则定义为连接它们的最短路径上所有边长度 $L^g(e)$ 之和 。
 \begin{equation}
-\label{eq:featured_distance_revised}
-\hat{d}(v,w) = \min_{p: v \leadsto w} \left\{ \sum_{e \in p} L^g(e) \right\}
+    \label{eq:featured_distance_revised}
+    \hat{d}(v,w) = \min_{p: v \leadsto w} \left\{ \sum_{e \in p} L^g(e) \right\}
 \end{equation}
 这个经过特征和影响向量调整的距离度量 $(V, \hat{d})$ 构成了计算持久同调（例如通过Vietoris-Rips滤过）的基础。通过改变影响向量 $g$，研究者可以探索不同领域知识对时间序列拓扑结构的影响。Heo 与 Jung 证明了这种方法的一个重要性质：持久性图对于影响向量 $g$ 的变化是稳定的，即满足 $D_B(\text{dgm}_p(g), \text{dgm}_p(g')) \le C ||g-g'||_\infty$，其中 $D_B$ 是瓶颈距离，$C$ 是一个常数。这种稳定性保证了该增强方法在调整领域知识影响时的鲁棒性和结果的可靠性。
 \begin{table}[htbp]
@@ -316,35 +361,35 @@ L^g(e) = (\hat{W}_E(e))^{-1} - \alpha (\rho(\hat{W}_V(a) + \hat{W}_V(b)))
     \caption{传统点云嵌入与Heo \& Jung特征化时间序列方法的简明对比}
     \label{tab:embedding_comparison_concise}
     \begin{tabular}{>{\raggedright\arraybackslash}p{0.25\textwidth} >{\raggedright\arraybackslash}p{0.35\textwidth} >{\raggedright\arraybackslash}p{0.35\textwidth}}
-    \toprule
-    \textbf{比较维度} & \textbf{传统点云嵌入 (以TDE为例)} & \textbf{Heo \& Jung 的特征化方法} \\
-    \midrule
-    核心目标/输出 &
-    在欧几里得空间($\mathbb{R}^m$)中重构几何点云，代表系统状态。 &
-    构建一个赋权图，并基于此定义一个可调整的度量空间 $(V, \hat{d})$ 作为拓扑分析输入。 \\
-    \addlinespace
-    距离度量来源 &
-    通常是嵌入点之间的欧几里得距离。 &
-    基于图的边/点权重（由特征和影响向量决定）定义的最短路径距离 $\hat{d}(v,w)$。 \\
-    \addlinespace
-    领域知识整合 &
-    通常不直接在构造中融入，主要通过参数选择间接体现。 &
-    通过“特征化时间序列”和“影响向量”显式、量化地融入距离度量的计算中。 \\
-    \addlinespace
-    调整机制 &
-    主要调整嵌入维度 $d$ 和时间延迟 $\tau$。 &
-    主要调整“影响向量” $g$，改变特征对距离度量的影响。 \\
-    \addlinespace
-    “增强”体现 &
-    优化参数以期更好地“展开”吸引子。 &
-    通过影响向量主动“调制”点间距离，使度量空间更能反映关注的结构。 \\
-    \addlinespace
-    理论稳定性 &
-    依赖Takens等定理（理想条件）；对参数选择敏感。 &
-    Heo \& Jung 证明了持久性图对影响向量变化具有稳定性，增强了调整时的可靠性。 \\
-    \bottomrule
+        \toprule
+        \textbf{比较维度}                          & \textbf{传统点云嵌入 (以TDE为例)} & \textbf{Heo \& Jung 的特征化方法} \\
+        \midrule
+        核心目标/输出                                &
+        在欧几里得空间($\mathbb{R}^m$)中重构几何点云，代表系统状态。 &
+        构建一个赋权图，并基于此定义一个可调整的度量空间 $(V, \hat{d})$ 作为拓扑分析输入。                                               \\
+        \addlinespace
+        距离度量来源                                 &
+        通常是嵌入点之间的欧几里得距离。                       &
+        基于图的边/点权重（由特征和影响向量决定）定义的最短路径距离 $\hat{d}(v,w)$。                                                  \\
+        \addlinespace
+        领域知识整合                                 &
+        通常不直接在构造中融入，主要通过参数选择间接体现。              &
+        通过“特征化时间序列”和“影响向量”显式、量化地融入距离度量的计算中。                                                             \\
+        \addlinespace
+        调整机制                                   &
+        主要调整嵌入维度 $d$ 和时间延迟 $\tau$。             &
+        主要调整“影响向量” $g$，改变特征对距离度量的影响。                                                                    \\
+        \addlinespace
+        “增强”体现                                 &
+        优化参数以期更好地“展开”吸引子。                      &
+        通过影响向量主动“调制”点间距离，使度量空间更能反映关注的结构。                                                                \\
+        \addlinespace
+        理论稳定性                                  &
+        依赖Takens等定理（理想条件）；对参数选择敏感。             &
+        Heo \& Jung 证明了持久性图对影响向量变化具有稳定性，增强了调整时的可靠性。                                                     \\
+        \bottomrule
     \end{tabular}
-    \end{table}
+\end{table}
 \subsection{从点云构建复形过滤}
 将时间序列数据转换为高维欧几里得空间 $\mathbb{R}^d$ 中的点云 $P$ 是进行拓扑数据分析的前置步骤。然而，点云本身仅为离散点的集合，缺乏描述点与点之间连接关系或更高维度结构（如环、空腔）的内在信息。拓扑数据分析，特别是持续同调（Persistent Homology, PH），正是通过分析点云数据所隐含的这种高阶结构来量化数据的“形状”特征。至关重要的是，持续同调并非直接作用于原始点云，而是作用于从点云数据构建的单纯复形（Simplicial Complex）或类似组合结构（如立方复形）之上。更进一步，持续同调的核心在于研究拓扑特征如何在不同尺度（scale）下演化并持续存在。因此，仅仅构建单个复形是不够的，必须构建一个随尺度参数变化的复形序列，即所谓的过滤（Filtration）。这一过程是连接点云的几何表示与持续同调所揭示的拓扑不变量之间的关键桥梁。
 
@@ -355,13 +400,13 @@ L^g(e) = (\hat{W}_E(e))^{-1} - \alpha (\rho(\hat{W}_V(a) + \hat{W}_V(b)))
 
 首先，介绍滑动窗口嵌入方法。假设有一个在实数区间上定义的函数 $f$（例如，一个时间序列信号）。选择一个正整数 $M$ 和一个正实数 $\tau$（时间延迟）。在时间点 $t \in \mathbb{R}$，函数 $f$ 到 $\mathbb{R}^{M+1}$ 维空间的滑动窗口嵌入点 $SW_{M,\tau}f(t)$ 定义为：
 \begin{equation}
-SW_{M,\tau}f(t) = \begin{bmatrix} f(t) \\ f(t+\tau) \\ \vdots \\ f(t+M\tau) \end{bmatrix}
+    SW_{M,\tau}f(t) = \begin{bmatrix} f(t) \\ f(t+\tau) \\ \vdots \\ f(t+M\tau) \end{bmatrix}
 \end{equation}
 通过在不同的时间点 $t$ 上进行采样，可以得到一个点云集合，即滑动窗口点云（Sliding Window Point Cloud）。这个点云是后续拓扑分析的基础。此嵌入的一个关键参数是窗口大小（window-size）$M\tau$。
 
 获得了滑动窗口点云 $X$（通常是一个紧致集，例如由有限个采样点构成）后，采用Rips复形进行构造。给定一个距离参数 $r \ge 0$，点云 $X$ 上的Rips复形，记作 $R_r(X)$，是一个单纯复形，其顶点集即为点云 $X$ 中的点。一个包含 $k+1$ 个顶点 $\{x_0, x_1, \ldots, x_k\}$ 的集合构成 $R_r(X)$ 中的一个 $k$-单纯形（记作 $[x_0, x_1, \ldots, x_k]$），当且仅当该集合中任意两个不同顶点 $x_i, x_j$ 之间的欧氏距离（或其他定义好的度量）满足以下条件：
 \begin{equation}
-\|x_i - x_j\| \leq r \quad \forall 0 \leq i < j \leq k
+    \|x_i - x_j\| \leq r \quad \forall 0 \leq i < j \leq k
 \end{equation}
 值得注意的是，Rips复形的构造仅依赖于其一维骨架（即边）：一个高维单纯形被包含在复形中，当且仅当它的所有边（即所有顶点对）都满足上述距离条件。通过改变参数 $r$ 的值，可以得到一个嵌套的复形序列 $R_0(X) \subset R_{r_1}(X) \subset \ldots \subset R_{r_m}(X)$，这构成了Rips过滤（Rips filtration），是计算持久同调的基础。
 
@@ -379,32 +424,32 @@ SW_{M,\tau}f(t) = \begin{bmatrix} f(t) \\ f(t+\tau) \\ \vdots \\ f(t+M\tau) \end
     \caption{不同算法在合成数据集上的分类性能 (AUC 值)}
     \label{tab:auc_results}
     \begin{tabular}{@{}llcccc@{}}
-    \toprule
-    \multirow{2}{*}{信号类型} & \multirow{2}{*}{噪声水平 (SD)} & \multicolumn{4}{c}{算法的AUC值} \\
-    \cmidrule(l){3-6}
-     &  & JTK & LS & PH & SW1P \\
-    \midrule
-    \multirow{3}{*}{Cosine (余弦波)} & 0  & 1.00 & 1.00 & 1.00 & 1.00 \\
-                                   & 25 & 1.00 & 1.00 & 0.97 & 1.00 \\
-                                   & 50 & 0.96 & 0.99 & 0.78 & 0.98 \\
-    \midrule
-    \multirow{3}{*}{Damped (阻尼波)} & 0  & 1.00 & 1.00 & 1.00 & 1.00 \\
-                                   & 25 & 0.94 & 0.98 & 0.65 & 0.90 \\
-                                   & 50 & 0.56 & 0.66 & 0.59 & 0.71 \\
-    \midrule
-    \multirow{3}{*}{Peaked (尖峰波)} & 0  & 1.00 & 1.00 & 1.00 & 1.00 \\
-                                   & 25 & 0.99 & 1.00 & 0.92 & 0.99 \\
-                                   & 50 & 0.72 & 0.86 & 0.77 & 0.87 \\
-    \midrule
-    \multirow{3}{*}{Trended (趋势波)} & 0  & 1.00 & 1.00 & 1.00 & 1.00 \\
-                                    & 25 & 1.00 & 1.00 & 0.98 & 0.99 \\
-                                    & 50 & 0.93 & 0.97 & 0.81 & 0.93 \\
-    \bottomrule
+        \toprule
+        \multirow{2}{*}{信号类型}          & \multirow{2}{*}{噪声水平 (SD)} & \multicolumn{4}{c}{算法的AUC值}                      \\
+        \cmidrule(l){3-6}
+                                       &                            & JTK                         & LS   & PH   & SW1P \\
+        \midrule
+        \multirow{3}{*}{Cosine (余弦波)}  & 0                          & 1.00                        & 1.00 & 1.00 & 1.00 \\
+                                       & 25                         & 1.00                        & 1.00 & 0.97 & 1.00 \\
+                                       & 50                         & 0.96                        & 0.99 & 0.78 & 0.98 \\
+        \midrule
+        \multirow{3}{*}{Damped (阻尼波)}  & 0                          & 1.00                        & 1.00 & 1.00 & 1.00 \\
+                                       & 25                         & 0.94                        & 0.98 & 0.65 & 0.90 \\
+                                       & 50                         & 0.56                        & 0.66 & 0.59 & 0.71 \\
+        \midrule
+        \multirow{3}{*}{Peaked (尖峰波)}  & 0                          & 1.00                        & 1.00 & 1.00 & 1.00 \\
+                                       & 25                         & 0.99                        & 1.00 & 0.92 & 0.99 \\
+                                       & 50                         & 0.72                        & 0.86 & 0.77 & 0.87 \\
+        \midrule
+        \multirow{3}{*}{Trended (趋势波)} & 0                          & 1.00                        & 1.00 & 1.00 & 1.00 \\
+                                       & 25                         & 1.00                        & 1.00 & 0.98 & 0.99 \\
+                                       & 50                         & 0.93                        & 0.97 & 0.81 & 0.93 \\
+        \bottomrule
     \end{tabular}
     \footnotesize
     \newline
     \textit{注：数据来源于 Perea 和 Harer 的论文中图6所示的ROC曲线分析。SW1P是该论文提出的方法。LS代表Lomb-Scargle，PH代表通用的持续同调方法）。}
-    \end{table}
+\end{table}
 
 
 \subsubsection{witness复形}
@@ -412,7 +457,7 @@ SW_{M,\tau}f(t) = \begin{bmatrix} f(t) \\ f(t+\tau) \\ \vdots \\ f(t+M\tau) \end
 
 一个由地标点构成的单纯形 $\sigma = [q_{j_0}, q_{j_1}, \ldots, q_{j_k}]$ (其中 $q_{j_l} \in Q$) 被点云 $P$ 中的一个点 $x \in P$ (称为 witness) 所“弱见证”(weakly witnessed)，若对于 $\sigma$ 中的每一个顶点 $q \in \{q_{j_0}, \ldots, q_{j_k}\}$ 以及任意一个不在 $\sigma$ 中的地标点 $p \in Q \setminus \{q_{j_0}, \ldots, q_{j_k}\}$，都满足以下距离关系：
 \begin{equation}
-d(q, x) \le d(p, x)
+    d(q, x) \le d(p, x)
 \end{equation}
 这个条件意味着，相对于 witness 点 $x$ 而言，单纯形 $\sigma$ 中的所有顶点 $q$ 比任何不在 $\sigma$ 中的地标点 $p$ 都更近（或等近）。
 
@@ -420,7 +465,7 @@ d(q, x) \le d(p, x)
 
 进一步地，强 Witness 复形 $\mathcal{W}_{strong}(P, Q)$ 对见证条件有更严格的要求。一个地标单纯形 $\sigma = [q_{j_0}, \ldots, q_{j_k}]$ 属于强 Witness 复形，如果它被某个 $x \in P$ 所弱见证，并且对于这个 $x$，它到 $\sigma$ 的所有顶点的距离都相等：
 \begin{equation}
-d(q_{j_0}, x) = d(q_{j_1}, x) = \ldots = d(q_{j_k}, x)
+    d(q_{j_0}, x) = d(q_{j_1}, x) = \ldots = d(q_{j_k}, x)
 \end{equation}
 这两种Witness复形的构造都依赖于地标点和原始点云中 witness 点之间的距离关系，从而在降低计算复杂度的同时，试图捕捉原始点云的拓扑特征。
 
