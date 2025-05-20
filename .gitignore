@@ -80,3 +80,4 @@ _minted*
 *.ps
 *.backup
 .*.swp
+out/main.xdv

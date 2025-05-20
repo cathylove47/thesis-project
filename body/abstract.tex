@@ -1,12 +1,12 @@
 \section*{\zihao{-2} \centering 摘 ~~ 要}
-% 生成序号列表
- \begin{enumerate}
- \item 简述时间序列分类的重要性以及传统方法的局限性
- \item 引入拓扑数据分析作为一种新兴方法,在捕捉数据内在结构方面的独特潜力
- \item 明确核心:深入综述和比较分析点云构造策略和从PD中提取有效特征的技术
- \item 概述综述的主要内容,对不同方法的原理,优缺点,参数影响和适用性进行比较
- 
- \end{enumerate}
+在复杂系统的时间序列分类任务中，传统分析方法常因数据噪声、非线性动力学特性以及多尺度结构的存在而面临特征提取不充分、模型适应性差等挑战。拓扑数据分析，特别是其核心工具持续同调，为理解和表征时间序列数据提供了全新的视角，它能够捕捉数据内在的、在不同尺度下保持稳定的拓扑结构，从而为解决上述难题展现出独特潜力。
+
+本文首先深入探讨了将原始时间序列数据有效地转化为适用于拓扑数据分析的点云表示的多种关键策略。针对时间延迟嵌入这一经典方法在选择嵌入维度和时间延迟等参数时所面临的挑战，本文系统梳理了包括伪近邻法、Cao方法、平均互信息在内的多种参数优化技术。同时，本文也对值-差分嵌入、导数嵌入、主成分分析嵌入、多变量嵌入及非均匀嵌入等替代性嵌入方案的原理、优势、局限性及其适用场景进行了比较分析，旨在为特定应用场景选择最优的点云构建方法提供参考。
+
+在获得时间序列的拓扑表示后，如何从持续同调的计算结果，特别是从其核心表示形式持续图中，提取出具有判别力的特征是另一核心环节。本文全面综述了从持续图中构造数值特征的主流技术，包括计算其特征数量与生命周期统计量等多种统计描述符，基于贝蒂数的表示例如贝蒂曲线，以及多种旨在更全面捕捉持续图几何与结构信息的基于函数或映射的向量化方法，如持久性熵、持久性图像、持久性景观和持久性中心等。此外，本文还讨论了基于子窗口聚合的鲁棒的持续同调特征提取策略，并对这些方法的原理、计算复杂度、稳定性及应用效果进行了比较。
+
+本文主要对基于持续同调的时间序列分类算法的关键环节——即时间序列的拓扑表示构建和拓扑特征提取技术——进行了系统性的梳理、比较与深入分析。通过阐述各类方法的理论基础、实现途径、参数影响以及它们在不同类型数据和应用场景下的优缺点与适用性，本文旨在为相关领域的研究者理解该新兴交叉学科的核心思想、掌握关键技术、评估方法性能并启发未来研究方向提供一个全面而有益的介绍。
+
 
 
 
@@ -19,13 +19,19 @@
 
 \clearpage
 \section*{\zihao{-2} \centering \textbf{Abstract} }
-   %用了Times New Roman字体来美化观感
-   
-here is English Abstract
+%用了Times New Roman字体来美化观感
+
+In time series classification tasks for complex systems, traditional analytical methods often face challenges such as insufficient feature extraction and poor model adaptability due to data noise, nonlinear dynamics, and multi-scale structures. Topological Data Analysis, particularly its core tool Persistent Homology, offers a novel perspective for understanding and characterizing time series data. It can capture intrinsic topological structures that are stable across different scales, thereby demonstrating unique potential for addressing the aforementioned difficulties.
+
+This paper first delves into various key strategies for effectively transforming raw time series data into point cloud representations suitable for Topological Data Analysis. Addressing the challenges faced by the classic Time-Delay Embedding method in selecting parameters like embedding dimension and time delay, this paper systematically reviews several parameter optimization techniques, including the False Nearest Neighbors method, Cao's method, and Average Mutual Information. Concurrently, this paper also comparatively analyzes the principles, advantages, limitations, and application scenarios of alternative embedding schemes such as value-difference embedding, derivative embedding, Principal Component Analysis embedding, multivariate embedding, and non-uniform embedding, aiming to provide a reference for selecting optimal point cloud construction methods for specific application scenarios.
+
+After obtaining the topological representation of time series, another core stage is how to extract discriminative features from the results of Persistent Homology computations, especially from its core representation, the persistence diagram. This paper comprehensively reviews mainstream techniques for constructing numerical features from persistence diagrams. These include calculating various statistical descriptors such as feature counts and lifetime statistics, representations based on Betti numbers like Betti curves, and multiple vectorization methods based on functions or mappings designed to more comprehensively capture the geometric and structural information of persistence diagrams, such as persistence entropy, persistence images, persistence landscapes, and persistence centers. Furthermore, this paper also discusses robust persistent homology feature extraction strategies based on sub-window aggregation and compares the principles, computational complexity, stability, and application effects of these methods.
+
+This paper primarily conducts a systematic review, comparison, and in-depth analysis of the key stages in time series classification algorithms based on persistent homology—namely, the construction of topological representations for time series and feature extraction techniques. By elucidating the theoretical foundations, implementation approaches, parameter impacts, as well as the pros, cons, and applicability of various methods across different data types and application scenarios, this paper aims to provide a comprehensive and beneficial reference for researchers in related fields to understand the core ideas of this emerging interdisciplinary subject, master key technologies, evaluate method performance, and inspire future research directions.
 
 \vskip0.5cm
 
-\textbf{\zihao{4} Key Words:} Multi-Agent Deep Reinforcement Learning, Formation Control, Path Planning
+\textbf{\zihao{4} Key Words:} Topological Data Analysis, Time Series Classification, Persistent Homology
 % \addcontentsline{toc}{section}{Abstract}
 
 

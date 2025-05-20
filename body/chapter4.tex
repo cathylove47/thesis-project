@@ -11,6 +11,15 @@
 
 持续同调的计算结果通常被总结在持续图（Persistence Diagram, PD）中。持续图是一个信息丰富的多尺度描述符，它将数据中拓扑特征的“出生”（birth）和“死亡”（death）时间表示为二维平面上的一个多重点集。图上每个点 $(b_i, d_i)$ 对应一个拓扑特征，其横坐标 $b_i$ 是该特征出现的尺度，纵坐标 $d_i$ 是其消失的尺度，而 $d_i - b_i$ 则被称为该特征的“持久性”或“寿命”（persistence/lifetime）。
 
+%插入图片
+
+\begin{figure}[thbp!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figure/出生死亡示意图.png}
+    \caption{持久性图和条形码}
+    \label{fig:tde_example}
+\end{figure}
+
 然而，持续图本身作为一个数学对象（多重点集），其结构复杂且度量空间不完备，这使得它无法直接输入到标准的机器学习算法或深度学习框架中进行分析。因此，核心的挑战在于如何有效地量化和总结持续图中蕴含的拓扑信息，将其转化为具体的、可计算的、适用于下游任务的特征表示（Feature Representation）或描述符（Descriptor）。这正是持续同调特征构造方法研究的关键所在\cite{1021736289.nh}。
 
 为了应对这一挑战，研究者们发展了多种策略来从持续图中提取特征。这些方法大致可以归纳为以下几类，也构成了本章将要深入探讨的主要内容。一种直接的方法是计算持久性图的统计描述符（Statistical Descriptors of PDs）。这类方法通过计算持续图上点的坐标（出生时间、死亡时间、持久性）的各种统计量来概括其分布特性。例如，可以计算不同维度同调群的特征总数、所有特征的总寿命或平均寿命、最长寿命（反映最显著特征）、显著特征（寿命超过某个阈值）的个数，以及基于寿命分布计算的熵值等。这些统计量提供了对持续图整体信息的宏观概括。
@@ -133,6 +142,11 @@ Mittal的论文\cite{mittal2017topological}从动态系统时间序列数据经�
 \end{equation}
 值中的第 $k$ 大值。这种将拓扑特征转化为函数的方法，使得对拓扑数据进行平均、定义范数和距离以及应用统计推断成为可能，为复杂数据分析提供了有力支持。
 
+\begin{figure}[thbp!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figure/持久性景观.png}
+    \caption{持久性图转化为持久性景观}
+\end{figure}
 
 
 \paragraph{持久性图像 (Persistence Images, PI)}
@@ -155,6 +169,23 @@ Mittal的论文\cite{mittal2017topological}从动态系统时间序列数据经�
     sl(D)(x) = P(D, \psi_{\text{sl}}, \Sigma)(x) = \sum_{\substack{(b,d) \in D \\ b \le x < d}} \frac{y-x}{\sum_{(b',d') \in D} (d'-b')}
 \end{equation}
 通过这种方式，持久性曲线能够将复杂的持久性图表信息转换为一维函数（或其离散化后的向量），更便于后续的分析和机器学习应用。
+\begin{figure}[htbp] % [htbp] 是图片位置浮动的建议参数
+    \centering % 使图片在其容器内水平居中
+
+    % 第一个图
+    \includegraphics[width=1\textwidth]{figure/持久性曲线1.png} % 请替换为您的第一个图片路径和文件名
+    % 您可以在两个图片之间添加一些垂直间距（可选）
+    % \vspace{5mm} % 例如，增加5毫米的垂直间距
+    % 或者简单地用一个空行来确保它们在不同行（通常默认就是如此）
+
+    % 第二个图
+    \includegraphics[width=1\textwidth]{figure/持久性曲线2.png} % 请替换为您的第二个图片路径和文件名
+
+    \caption{持久性曲线形成过程}
+\end{figure}
+
+
+
 
 \paragraph{持久性中心 (Persistence Centers)}
 \label{sec:feat_pcen}

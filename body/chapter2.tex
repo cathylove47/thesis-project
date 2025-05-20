@@ -211,6 +211,13 @@ $H_q^{\varepsilon_i, \varepsilon_j}$ 的秩（或维度，当以域为系数时�
 
 这种从信号到点云再到过滤复形的过程，使得可以运用持久同调来量化信号的周期性等特征。
 
+\begin{figure}[thbp!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figure/点云生成示意图.png}
+    \caption{VR复形示意图}
+    \label{fig:tde_example}
+\end{figure}
+
 
 \subsubsection{witness复形实例}
 当点云 $P$ 的规模非常大时，构建VR复形的计算开销会非常高。为了解决这个问题，可以使用 Witness 复形\cite{de2004topological}。Witness 复形是在点云 $P$ 的一个（通常较小的）子集 $Q = \{q_1, q_2, \ldots, q_M\} \subset P$ (称为地标点，landmark points) 上构建的，但其结构依然受到整个点云 $P$ (称为 witness 点) 的影响。地标点可以通过最大最小采样 (maxmin) 或随机采样等方法从 $P$ 中选取。Mittal\cite{mittal2017topological}论文中提到了两种类型的Witness复形，其定义基于“被见证”的概念：
