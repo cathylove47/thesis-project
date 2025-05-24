@@ -241,23 +241,23 @@ TDE 的基本原理是将一维时间序列 \( s(t) \) 通过引入时间延迟 
     \caption{曹氏方法实验结果选例}
     \label{tab:cao_results_adjusted} % 建议修改label以区分
     % 请确保在导言区有 \usepackage{array}
-    \begin{tabular}{|l|l|l|>{\raggedright\arraybackslash}p{3.5cm}|} % 修改了第四列的定义
+    \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|} % 删除了一列，并修改了对齐方式
         \hline
-        \textbf{系统}                 & \textbf{采样点个数} & \textbf{Cao方法 $d_{min}$} & \textbf{备注/FNN对比}        \\
+        \textbf{系统}                 & \textbf{Cao方法 $d_{min}$} & \textbf{与FNN对比}          \\
         \hline
-        Hénon 吸引子                   & 1000 \& 10000  & 2                        & 结果对数据长度不敏感               \\
+        Hénon 吸引子                   & 2                        & 结果对数据长度不敏感               \\
         \hline
-        Ikeda 吸引子                   & 1000 \& 10000  & 4                        & 1000点时FNN结果不稳定           \\
+        Ikeda 吸引子                   & 4                        & 1000点时FNN结果不稳定           \\
         \hline
-        Lorenz 吸引子                  & 1000 \& 10000  & 3                        & 结果稳定                     \\
+        Lorenz 吸引子                  & 3                        & 结果稳定                     \\
         \hline
-        随机有色噪声                      & 1000 \& 10000  & N/A ($E2 \approx 1$)     & FNN方法会误判为低维混沌            \\
+        随机有色噪声                      & N/A ($E2 \approx 1$)     & FNN方法会误判为低维混沌            \\
         \hline
-        Mackey-Glass ($\Delta=100$) & 1000 \& 10000  & 17                       & FNN方法结果偏小 ($\sim$6)且依赖参数 \\
+        Mackey-Glass ($\Delta=100$) & 17                       & FNN方法结果偏小 ($\sim$6)且依赖参数 \\
         \hline
-        特定四维映射                      & 1000 \& 10000  & 4                        & 1000点时FNN无法区分            \\
+        特定四维映射                      & 4                        & 1000点时FNN无法区分            \\
         \hline
-        实验激光数据                      & 1000           & 7                        & FNN结果在$d=7$后不稳定          \\
+        实验激光数据                      & 7                        & FNN结果在$d=7$后不稳定          \\
         \hline
     \end{tabular}
 \end{table}
