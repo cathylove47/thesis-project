@@ -3,13 +3,17 @@
 \usepackage{xeCJK}
 \newcommand{\zhongsong}{\CJKfontspec{STZhongsong.ttf}}%华文中宋，请自行下载字体并安装
 \usepackage{comment}
+\usepackage[UTF8]{ctex} % 支持中文
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
 \usepackage{booktabs}
 \usepackage{amsmath}                 % AMS LaTeX宏包
-\usepackage[ruled]{algorithm2e}              %伪代码
+\usepackage{algorithm,algpseudocode}
 %\usepackage{amssymb}                % 用来排版漂亮的数学公式
 %\usepackage{amsbsy}
+\usepackage{algorithm,algpseudocode} %%% 伪代码
+
+
 \usepackage[style=1]{mdframed}
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -114,8 +118,9 @@ citecolor=black
 \renewcommand{\tablename}{表}
 \renewcommand{\appendixname}{附录}
 \renewcommand{\proofname}{证明}
-\renewcommand{\algorithmcfname}{算法} 
-%\renewcommand{\algorithm}{算法} 
+
+
+
 %============== 封皮和前言 =================
 \input{body/cover}
 \pagestyle{plain}
