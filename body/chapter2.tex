@@ -130,11 +130,11 @@ $$ \text{VR}(P, \epsilon_0) \subseteq \text{VR}(P, \epsilon_1) \subseteq \dots \
 除了 Vietoris-Rips 过滤之外，Čech 复形是另一种从点云数据构建单纯复形的重要方法，它与开覆盖的神经（Nerve of an open cover）紧密相关，并具有良好的理论性质。
 
 \textbf{定义 2.12} (Čech 复形)\cite{zomorodian2004computing}：
-令 $(X, d)$ 为一个度量空间，其中 $X$ 是一个（通常为有限的）点集。对于给定的参数 $\varepsilon > 0$，令 $B(x, \varepsilon)$ 表示以点 $x \in X$ 为球心、$\varepsilon$ 为半径的闭球。考虑由这些球构成的集合 $\mathcal{B}_{\varepsilon}(X) = \{B(x, \varepsilon) \mid x \in X\}$，这是一个对 $X$ 中各点邻域的覆盖（尽管它本身可能不是对某个更大空间的完整覆盖）。
-这个覆盖 $\mathcal{B}_{\varepsilon}(X)$ 的 \textbf{神经 (Nerve)}，记为 $N(\mathcal{B}_{\varepsilon}(X))$，即为点集 $X$ 上参数为 $\varepsilon$ 的 \textbf{Čech 复形 (Čech complex)}，记作 $C(X, \varepsilon)$。其定义如下：
-$C(X, \varepsilon)$ 的顶点集为点集 $X$ 本身。一个由 $X$ 中的 $k+1$ 个顶点组成的集合 $\{\alpha_0, \alpha_1, \ldots, \alpha_k\}$ 构成 $C(X, \varepsilon)$ 中的一个 $k$-单纯形（记作 $\langle \alpha_0, \alpha_1, \ldots, \alpha_k \rangle$），当且仅当这些顶点对应的半径为 $\varepsilon$ 的闭球的交集非空，即：
-$$ \bigcap_{j=0}^{k} B(\alpha_j, \varepsilon) \neq \emptyset $$
-其中 $\alpha_j \in X$, $0 \le j \le k$。
+令 $(X, d)$ 为一个度量空间，$X$ 为有限点集，$d$ 为度量。对于参数 $\varepsilon > 0$，定义以点 $x \in X$ 为球心、半径为 $\varepsilon$ 的闭球 $B(x, \varepsilon)$。集合 $\mathcal{B}_{\varepsilon}(X) = \{B(x, \varepsilon) \mid x \in X\}$ 构成 $X$ 的覆盖。
+
+Čech复形 $C(X, \varepsilon)$ 定义为覆盖 $\mathcal{B}_{\varepsilon}(X)$ 的神经（Nerve）。其顶点集为 $X$。一个由 $k+1$ 个顶点 $\{\alpha_0, \alpha_1, \ldots, \alpha_k\}$ 组成的 $k$-单纯形 $\langle \alpha_0, \alpha_1, \ldots, \alpha_k \rangle$ 属于 $C(X, \varepsilon)$，当且仅当这些顶点对应的闭球交集非空，即：
+\[ \bigcap_{j=0}^{k} B(\alpha_j, \varepsilon) \neq \emptyset, \]
+其中 $\alpha_j \in X$，$0 \leq j \leq k$。
 
 与 Vietoris-Rips 复形类似，当参数 $\varepsilon$ 从 $0$ 开始增加时，Čech 复形也形成一个嵌套序列 $C(X, \varepsilon_0) \subseteq C(X, \varepsilon_1) \subseteq \dots \subseteq C(X, \varepsilon_m)$，构成一个 \textbf{Čech 过滤 (Čech filtration)}。根据神经定理 (Nerve Theorem)，在一定条件下，Čech 复形的同调群能够准确地反映其覆盖球并集的同调群，这使其在理论分析中具有重要地位。然而，由于判断多个球交集是否非空的计算复杂度较高，实际应用中 Vietoris-Rips 复形更为常见。
 % 插入图片
@@ -238,10 +238,10 @@ $H_q^{\varepsilon_i, \varepsilon_j}$ 的秩（或维度，当以域为系数时�
 
 通过改变VR复形的尺度参数 $\epsilon$ 或Witness复形的选取方式（例如，地标点的数量或特定的见证半径，尽管本论文的定义更侧重相对距离），可以构建一个过滤的单纯复形序列，这是进行持久同调分析的基础。
 \subsection{本章小结}
-本章系统地梳理了支撑本研究——基于持续同调的时间序列分类算法——所必需的核心数学与拓扑学理论基础。首先，明确了研究对象\textbf{时间序列}及其基本表示，并引入了作为拓扑数据分析直接输入的\textbf{点云}概念。
+本章系统地梳理了支撑本研究——基于持续同调的时间序列分类算法——所必需的核心数学与拓扑学理论基础。首先，明确了研究对象时间序列及其基本表示，并引入了作为拓扑数据分析直接输入的点云概念。
 
-随后，重点阐述了\textbf{持续同调的基本概念}。这一部分从局部化分析时间序列的常用技术\textbf{滑动窗口}入手，引出了拓扑学中关于连续形变思想的\textbf{同伦}概念。接着，详细定义了从点云数据构建拓扑结构的基石——\textbf{单纯形与单纯复形}，并阐释了通过引入尺度参数形成\textbf{过滤}（如Vietoris-Rips过滤和Čech过滤）的过程。在这些组合结构的基础上，本章进一步介绍了如何通过\textbf{链群、边缘算子、闭链群与边缘链群}来代数地定义和计算\textbf{同调群}，以及量化拓扑特征（孔洞）数量的\textbf{贝蒂数}。最后，核心的\textbf{持续同调群}及其可视化表示——\textbf{持续图}——被引入，它们能够捕捉拓扑特征在不同尺度下的出生、死亡及持续性，是后续特征提取的关键。
+随后，重点阐述了持续同调的基本概念。这一部分从局部化分析时间序列的常用技术滑动窗口入手，引出了拓扑学中关于连续形变思想的同伦概念。接着，详细定义了从点云数据构建拓扑结构的基石——单纯形与单纯复形，并阐释了通过引入尺度参数形成过滤（如Vietoris-Rips过滤和Čech过滤）的过程。在这些组合结构的基础上，本章进一步介绍了如何通过链群、边缘算子、闭链群与边缘链群来代数地定义和计算同调群，以及量化拓扑特征（孔洞）数量的贝蒂数。最后，核心的持续同调群及其可视化表示——持续图——被引入，它们能够捕捉拓扑特征在不同尺度下的出生、死亡及持续性，是后续特征提取的关键。
 
-此外，本章还具体列举了从点云数据实际构建过滤复形的两种常用实例：\textbf{Vietoris-Rips复形}和更适用于大规模点云的\textbf{Witness复形}，为后续章节中将时间序列数据转化为拓扑表示并进行分析提供了具体的操作路径。
+此外，本章还具体列举了从点云数据实际构建过滤复形的两种常用实例：Vietoris-Rips复形和更适用于大规模点云的Witness复形，为后续章节中将时间序列数据转化为拓扑表示并进行分析提供了具体的操作路径。
 
 综上所述，第二章所介绍的理论知识，从基础的数据表示到核心的持续同调计算原理，共同构成了理解和实现后续章节中时间序列拓扑表示构建（第三章）以及拓扑特征提取与分类（第四章）的坚实理论框架。
