@@ -467,17 +467,30 @@ $$
         \bottomrule
     \end{tabular}
 \end{table}
-由上表可知，在结合了PH特征后，PHMLP和PHFCN模型在大多数数据集上都取得了显著的性能提升。尤其是在AUSLAN、ArabicDigits和CharacterTrajectories等数据集上，PHMLP和PHFCN的准确率均超过了95\%。在CMUsubject16数据集上，PHMLP的表现略逊于其他模型，但仍然达到了60\%的准确率。整体来看，PH特征在多变量时间序列分类任务中展现出了良好的性能，证明了持续同调方法在时间序列分析中的有效性。
+由上表可知，在结合了PH特征后，PHMLP和PHFCN模型在大多数数据集上都取得了显著的性能提升。尤其是在AUSLAN、ArabicDigits和CharacterTrajectories等数据集上，PHMLP和PHFCN的准确率均超过了95\%。在CMUsubject16数据集上，PHMLP的表现略逊于其他模型，但仍然达到了60\%的准确率。整体来看，PH特征在多变量时间序列分类任务中展现出了良好的性能，证明了持续同调方法在时间序列分析中的有效性。下面是算法的伪代码，展示了如何利用持续同调特征进行时间序列分类。
 
 
-
-
-
-
-
-
-
-
+\begin{algorithm}[H]
+    \caption{基于持续同调的时间序列分类}
+    \label{alg:concise_ph_tsc}
+    \begin{algorithmic}[1]
+    \DontPrintSemicolon
+    \Require 时间序列数据集 $D$；TDE 参数 ($d$, $\tau$)
+    \Ensure 模型分类准确率
+    \Statex
+    \ForEach{时间序列 $y_i \in D$}
+        \State $\hat{y}_i \leftarrow \text{数据归一化}(y_i)$
+        \State $P_i \leftarrow \text{时间延迟嵌入}(\hat{y}_i, d, \tau)$ \Comment*[r]{生成点云}
+        \State $\{PD_{i,k}\} \leftarrow \text{计算持久性图}(P_i)$ \Comment*[r]{例如 $k=0,1$}
+        \State $ph\_feat_i \leftarrow \text{向量化PD}(\{PD_{i,k}\})$ \Comment*[r]{例如使用持久性图像或景观}
+    \EndFor
+    \Statex
+    \State $\{ph\_feat_i\}_{train}, \{ph\_feat_i\}_{test} \leftarrow \text{划分训练/测试集}$
+    \State 模型 $\leftarrow \text{训练分类器}(\{ph\_feat_i\}_{train}, \text{对应标签})$ \Comment*[r]{如 MLP 或 FCN}
+    \State 准确率 $\leftarrow \text{评估模型}(\text{模型}, \{ph\_feat_i\}_{test}, \text{对应标签})$
+    \end{algorithmic}
+    \end{algorithm}
+    
 
 
 \subsection{本章小结}
